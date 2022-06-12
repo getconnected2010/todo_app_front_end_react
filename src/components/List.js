@@ -1,41 +1,53 @@
 import React from "react";
-import axios from "axios";
 import {useState} from "react";
-import userEvent from "@testing-library/user-event";
+import { ListApi, DeleteListApi } from "../services/ListApi";
+import {Button, Table, Modal, Badge} from "react-bootstrap";
+
 
 const List = () =>{
     const [list, setList] = useState([]);
+    const [deletedItem, setDeletedItem] = useState({});
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     //makes axios database call to get all the list items
-    const getList =() =>{
-        console.log("in getlist fn")
-        axios
-        .get("http://localhost:8080/todo/all")
-        .then(result=> setList(result.data))
-        .catch(error=> console.log(error))
+    const getList =async() =>{
+        const result = await ListApi();
+        if(Array.isArray(result))setList(result);
     }
 
     //makes a database call to delete an item
-    const deleteItem = (Id) =>{
-        axios
-        .delete(`http://localhost:8080/todo/delete/${Id}`)
-        .then(result=> console.log(result.data))
-        .catch(error=> console.log(error))
+    const deleteItem = async(Id) =>{
+        const result = await DeleteListApi(Id);
+        if(result.status==200){
+            handleShow();
+            setDeletedItem(result.data);
+            const newList = list.filter(item=> item.todoId != result.data.todoId);
+            setList(newList);
+        }
     }
-    console.log(list);
 
   return(
     <div>
-        This is a list of todo.
-        <button onClick={getList}>Get list</button>
-        <table>
+        <div>
+        <h1 class="text-center text-uppercase font-weight-bold text-primary pt-4">
+            Todo List 
+        </h1>
+            <Button className="m-2 px-4" variant="success" size="lg" onClick={getList}>Get list</Button>
+        </div>
+        <Table striped bordered hover variant="dark" size="sm">
+           
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due date</th>
+                    <th>Completed</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
             <tbody>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Due date</th>
-                <th>Completed</th>
-            </tr>
             {
                 list.map(item=>(
                     <tr id={item.todoId}>
@@ -43,12 +55,43 @@ const List = () =>{
                         <td id={item.todoId}>{item.description}</td>
                         <td id={item.todoId}>{item.dueDate}</td>
                         <td id={item.todoId}>{item.completed? "Y": "N"}</td>
-                        <td><button id={item.todoId} onClick={()=>deleteItem(item.todoId)}>Clear</button></td>
+                        <td><Button id={item.todoId} onClick={()=>deleteItem(item.todoId)}>Delete task</Button></td>
                     </tr>
                 ))
             }
            </tbody>
-        </table>
+        </Table>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Deleted Task</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Table variant="danger">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Due date</th>
+                                <th>Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td >{deletedItem.title}</td>
+                                <td >{deletedItem.description}</td>
+                                <td >{deletedItem.dueDate}</td>
+                                <td >{deletedItem.completed? "Y": "N"}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
     </div>
   )
 }
