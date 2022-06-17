@@ -1,7 +1,7 @@
 import React from "react";
 import {useState} from "react";
 import { ListApi, DeleteListApi } from "../services/ListApi";
-import {Button, Table, Modal, Badge} from "react-bootstrap";
+import {Button, Table, Modal} from "react-bootstrap";
 
 
 const List = () =>{
@@ -20,10 +20,10 @@ const List = () =>{
     //makes a database call to delete an item
     const deleteItem = async(Id) =>{
         const result = await DeleteListApi(Id);
-        if(result.status==200){
+        if(result.status===200){
             handleShow();
             setDeletedItem(result.data);
-            const newList = list.filter(item=> item.todoId != result.data.todoId);
+            const newList = list.filter(item=> item.todoId !== result.data.todoId);
             setList(newList);
         }
     }
