@@ -29,12 +29,12 @@ const List = () =>{
     }
 
   return(
-    <div>
-        <div>
-        <h1 class="text-center text-uppercase font-weight-bold text-primary pt-4">
+    <div className=" list">
+        <h1>
             Todo List 
         </h1>
-            <Button className="m-2 px-4" variant="success" size="lg" onClick={getList}>Get list</Button>
+        <div className="listHeader">
+            <Button className="listButton" onClick={getList}>Get list</Button>
         </div>
         <Table striped bordered hover variant="dark" size="sm">
            
@@ -55,7 +55,7 @@ const List = () =>{
                         <td id={item.todoId}>{item.description}</td>
                         <td id={item.todoId}>{item.dueDate}</td>
                         <td id={item.todoId}>{item.completed? "Y": "N"}</td>
-                        <td><Button id={item.todoId} onClick={()=>deleteItem(item.todoId)}>Delete task</Button></td>
+                        <td><Button className="deleteButton" id={item.todoId} onClick={()=>deleteItem(item.todoId)}>Delete task</Button></td>
                     </tr>
                 ))
             }
