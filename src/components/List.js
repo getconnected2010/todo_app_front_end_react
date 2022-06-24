@@ -1,10 +1,11 @@
-import React from "react";
-import {useState} from "react";
+import react, {useState} from "react";
+import {useNavigate} from 'react-router-dom';
 import { ListApi, DeleteListApi } from "../services/ListApi";
 import {Button, Table, Modal} from "react-bootstrap";
 
 
 const List = () =>{
+    const navigate = useNavigate();
     const [list, setList] = useState([]);
     const [deletedItem, setDeletedItem] = useState({});
     const [show, setShow] = useState(false);
@@ -28,6 +29,14 @@ const List = () =>{
         }
     }
 
+    //gathers obj info and routes to update page.
+    const updateItem = (Id)=>{
+        if(list.length>0){
+            const listItem = list.pop(item=>item.todoId===Id);       
+            navigate('/update', {state: {listItem}})
+        }
+    }
+
   return(
     <div className=" list">
         <h1>
@@ -45,6 +54,7 @@ const List = () =>{
                     <th>Due date</th>
                     <th>Completed</th>
                     <th>Action</th>
+                    <th>Update</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,6 +66,7 @@ const List = () =>{
                         <td id={item.todoId}>{item.dueDate}</td>
                         <td id={item.todoId}>{item.completed? "Y": "N"}</td>
                         <td><Button className="deleteButton" id={item.todoId} onClick={()=>deleteItem(item.todoId)}>Delete task</Button></td>
+                        <td><Button className="updateButton" id={item.todoId} onClick={()=>updateItem(item.todoId)}>Update Task</Button></td>
                     </tr>
                 ))
             }

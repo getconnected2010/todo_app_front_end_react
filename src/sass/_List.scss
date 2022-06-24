@@ -19,10 +19,13 @@
         font-weight: bolder;
         border-radius: 5rem;
     }
-    .deleteButton{
+    .deleteButton, .updateButton{
         background-color: rgb(214, 8, 8);
         color: black;
         font-style: oblique;
         font-weight: bold;
+    }
+    .updateButton{
+        background-color: rgb(254, 254, 22);
     }
 }

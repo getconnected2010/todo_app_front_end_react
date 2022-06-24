@@ -23,9 +23,18 @@ export const ListApi =async()=>{
 
 export const DeleteListApi = async(Id)=>{
     try {
-        const result = await axios.delete(BACK_END_URL + `/todo/delete/${Id}`)
+        const result = await axios.delete(BACK_END_URL + `/todo/delete/id/${Id}`)
         return result;
     } catch (error) {
-        console.log(error)   
+        console.log(error);
+    }
+}
+
+export const UpdateApi = async(values)=>{
+    try {
+        const result = await axios.put(BACK_END_URL+"/todo/update", values);
+        return result;
+    } catch (error) {
+        console.log(error)
     }
 }

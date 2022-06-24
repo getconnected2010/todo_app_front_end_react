@@ -14,7 +14,7 @@ const AddToList = ()=>{
         window.alert(result);
     }
     return(
-        <div className="add">
+        <div className="form">
             <h1>Enter task description</h1>
              <Form onSubmit={handleSubmit(submitTodo)} >
                 <Form.Group className="mb-3">
