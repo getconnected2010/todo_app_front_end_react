@@ -8,7 +8,8 @@ const NavigationBar =()=>{
                 <Container>
                 <Navbar.Brand href="/">Tasks</Navbar.Brand>
                 <Nav className="me-auto">
-                <Navbar.Brand href="/add">Add</Navbar.Brand>
+                <Navbar.Brand href="/add">Add To List</Navbar.Brand>
+                <Navbar.Brand href="/avatar">Upload Avatar</Navbar.Brand>
                 </Nav>
                 </Container>
             </Navbar>
