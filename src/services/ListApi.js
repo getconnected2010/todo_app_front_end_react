@@ -56,10 +56,11 @@ export const uploadAvatarApi = async(values)=>{
             }
         });
 
-        const result = await axios.post(BACK_END_URL+ "/user/avatar", formData);
+        const result = await axios.put(BACK_END_URL+ "/user/avatar", formData);
+        console.log(result)
         return result
     } catch (error) {
-        console.log(error);
+        console.log(error.response);
         return 'error uploading picture';
     }
 }
