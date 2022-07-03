@@ -9,4 +9,20 @@
     .img{
         max-height:4em;
     }
+    form{
+        display: flex;
+        max-height: 2em;
+        input{
+            max-width: 10em;
+            border-radius: 1rem;
+        }
+    }
+    button{
+        border-radius: 2rem;
+        padding: 0 1rem;
+        margin-left: 0.5rem;
+        overflow:hidden;
+        max-height: 2rem;
+
+    }
 }

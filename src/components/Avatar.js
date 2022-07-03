@@ -15,17 +15,19 @@ const Avatar = ()=>{
         }else{
             alert("Couldn't upload pictures.")
         }
+        reset();
     }
 
     return(
         <div className="avatar">
-            <Form onSubmit={handleSubmit(uploadAvatar)} >
+            <Form onSubmit={handleSubmit(uploadAvatar)} className="form">
             <Form.Group className="mb-3">
+                <h1>Upload Avatar</h1>
                     <Form.Label>Username</Form.Label>
                     <Form.Control {...register("username")} type="text"/>
                 </Form.Group>
                 <Form.Group className="mb-3">
-                    <Form.Label>Upload Avatar</Form.Label>
+                    <Form.Label>Avatar picture</Form.Label>
                     <Form.Control {...register("file")} type="file"/>
                 </Form.Group>
 
